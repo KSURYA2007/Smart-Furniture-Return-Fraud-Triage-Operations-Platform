@@ -1,0 +1,1272 @@
+/**
+ * Realistic Mock Seed Data for Module 2: Customer & Order History
+ * Contains 16 diverse customers, 56 historical orders, and 24 previous return requests
+ * Currency in INR (₹)
+ */
+
+export const INITIAL_CUSTOMERS = [
+  {
+    customer_id: 'CUS-1024',
+    name: 'John Smith',
+    email: 'john@example.com',
+    phone: '+91 98765 43210',
+    joined_date: '2024-03-15',
+    city: 'Bengaluru',
+    state: 'Karnataka'
+  },
+  {
+    customer_id: 'CUS-1025',
+    name: 'Priya Sharma',
+    email: 'priya.sharma@example.com',
+    phone: '+91 98111 22334',
+    joined_date: '2023-11-20',
+    city: 'Mumbai',
+    state: 'Maharashtra'
+  },
+  {
+    customer_id: 'CUS-1026',
+    name: 'Rahul Verma',
+    email: 'rahul.v@example.com',
+    phone: '+91 97234 56789',
+    joined_date: '2024-01-10',
+    city: 'Delhi',
+    state: 'Delhi'
+  },
+  {
+    customer_id: 'CUS-1027',
+    name: 'Ananya Iyer',
+    email: 'ananya.iyer@example.com',
+    phone: '+91 94455 66778',
+    joined_date: '2023-08-04',
+    city: 'Chennai',
+    state: 'Tamil Nadu'
+  },
+  {
+    customer_id: 'CUS-1028',
+    name: 'Vikram Mehta',
+    email: 'v.mehta@example.com',
+    phone: '+91 99887 76655',
+    joined_date: '2024-06-12',
+    city: 'Hyderabad',
+    state: 'Telangana'
+  },
+  {
+    customer_id: 'CUS-1029',
+    name: 'Sneha Patel',
+    email: 'sneha.p@example.com',
+    phone: '+91 98223 34455',
+    joined_date: '2023-05-18',
+    city: 'Ahmedabad',
+    state: 'Gujarat'
+  },
+  {
+    customer_id: 'CUS-1030',
+    name: 'Amitabh Roy',
+    email: 'amitabh.roy@example.com',
+    phone: '+91 93344 55667',
+    joined_date: '2024-02-28',
+    city: 'Kolkata',
+    state: 'West Bengal'
+  },
+  {
+    customer_id: 'CUS-1031',
+    name: 'Kavita Nair',
+    email: 'kavita.nair@example.com',
+    phone: '+91 94470 12345',
+    joined_date: '2023-09-14',
+    city: 'Kochi',
+    state: 'Kerala'
+  },
+  {
+    customer_id: 'CUS-1032',
+    name: 'Rohan Deshmukh',
+    email: 'rohan.desh@example.com',
+    phone: '+91 98901 23456',
+    joined_date: '2024-04-05',
+    city: 'Pune',
+    state: 'Maharashtra'
+  },
+  {
+    customer_id: 'CUS-1033',
+    name: 'Meera Kapoor',
+    email: 'meera.k@example.com',
+    phone: '+91 98188 99001',
+    joined_date: '2023-12-01',
+    city: 'Gurugram',
+    state: 'Haryana'
+  },
+  {
+    customer_id: 'CUS-1034',
+    name: 'Arjun Sen',
+    email: 'arjun.sen@example.com',
+    phone: '+91 91630 45678',
+    joined_date: '2024-07-22',
+    city: 'Kolkata',
+    state: 'West Bengal'
+  },
+  {
+    customer_id: 'CUS-1035',
+    name: 'Divya Reddy',
+    email: 'divya.reddy@example.com',
+    phone: '+91 98490 87654',
+    joined_date: '2023-07-11',
+    city: 'Hyderabad',
+    state: 'Telangana'
+  },
+  {
+    customer_id: 'CUS-1036',
+    name: 'Suresh Menon',
+    email: 'suresh.menon@example.com',
+    phone: '+91 98470 99887',
+    joined_date: '2024-05-30',
+    city: 'Bengaluru',
+    state: 'Karnataka'
+  },
+  {
+    customer_id: 'CUS-1037',
+    name: 'Pooja Agarwal',
+    email: 'pooja.agarwal@example.com',
+    phone: '+91 94140 11223',
+    joined_date: '2024-03-02',
+    city: 'Jaipur',
+    state: 'Rajasthan'
+  },
+  {
+    customer_id: 'CUS-1038',
+    name: 'Deepak Chopra',
+    email: 'deepak.c@example.com',
+    phone: '+91 98100 44556',
+    joined_date: '2023-04-19',
+    city: 'Noida',
+    state: 'Uttar Pradesh'
+  },
+  {
+    customer_id: 'CUS-1039',
+    name: 'Aishwarya Rao',
+    email: 'aishwarya.rao@example.com',
+    phone: '+91 98860 12399',
+    joined_date: '2024-08-01',
+    city: 'Bengaluru',
+    state: 'Karnataka'
+  }
+];
+
+export const INITIAL_ORDERS = [
+  // CUS-1024 (John Smith - 12 orders, 4 returns, 1 fraud)
+  {
+    order_id: 'ORD-1001',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-SOFA-01',
+    product_name: '3-Seater Fabric Recliner Sofa',
+    category: 'Sofa',
+    price: 45000,
+    order_date: '2024-04-12',
+    delivery_date: '2024-04-16',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1002',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-TABL-02',
+    product_name: 'Solid Teak Wood 6-Seater Dining Table',
+    category: 'Table',
+    price: 32000,
+    order_date: '2024-05-20',
+    delivery_date: '2024-05-24',
+    condition: 'Transit Scratch',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-1003',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-CHAIR-03',
+    product_name: 'Ergonomic Mesh High-Back Office Chair',
+    category: 'Chair',
+    price: 14500,
+    order_date: '2024-06-02',
+    delivery_date: '2024-06-05',
+    condition: 'Missing Part',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Confirmed Fraud'
+  },
+  {
+    order_id: 'ORD-1004',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-BED-04',
+    product_name: 'King Size Engineered Wood Hydraulic Bed',
+    category: 'Bed',
+    price: 48000,
+    order_date: '2024-07-10',
+    delivery_date: '2024-07-15',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1005',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-WARD-05',
+    product_name: '4-Door Wardrobe with Mirror',
+    category: 'Wardrobe',
+    price: 38000,
+    order_date: '2024-08-01',
+    delivery_date: '2024-08-06',
+    condition: 'Hinges Bent',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-1006',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-CAB-06',
+    product_name: 'Modern TV Console Cabinet 65-inch',
+    category: 'Cabinet',
+    price: 22000,
+    order_date: '2024-09-12',
+    delivery_date: '2024-09-16',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1007',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-CHAIR-07',
+    product_name: 'Accent Velvet Armchair Emerald Green',
+    category: 'Chair',
+    price: 18500,
+    order_date: '2024-10-05',
+    delivery_date: '2024-10-09',
+    condition: 'Fabric Discoloration',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-1008',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-TABL-08',
+    product_name: 'Marble Top Nesting Coffee Table Set',
+    category: 'Table',
+    price: 19500,
+    order_date: '2024-11-14',
+    delivery_date: '2024-11-18',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1009',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-BED-09',
+    product_name: 'Orthopedic Memory Foam Mattress King',
+    category: 'Bed',
+    price: 26000,
+    order_date: '2024-12-02',
+    delivery_date: '2024-12-05',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1010',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-CAB-10',
+    product_name: 'Bookcase with Glass Display Doors',
+    category: 'Cabinet',
+    price: 24500,
+    order_date: '2025-01-08',
+    delivery_date: '2025-01-12',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1011',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-SOFA-11',
+    product_name: 'L-Shape Sectional Left Facing Sofa',
+    category: 'Sofa',
+    price: 52000,
+    order_date: '2025-02-10',
+    delivery_date: '2025-02-15',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-1012',
+    customer_id: 'CUS-1024',
+    product_id: 'PRD-TABL-12',
+    product_name: 'Study Desk with Drawer Storage',
+    category: 'Table',
+    price: 15500,
+    order_date: '2025-03-01',
+    delivery_date: '',
+    condition: 'Order Cancelled',
+    order_status: 'Cancelled',
+    return_status: 'No Return',
+    outcome: 'Cancelled'
+  },
+
+  // CUS-1025 (Priya Sharma - 8 orders, 0 returns, High Value Genuine Buyer)
+  {
+    order_id: 'ORD-2001',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-SOFA-21',
+    product_name: 'Chesterfield Genuine Leather 3-Seater',
+    category: 'Sofa',
+    price: 85000,
+    order_date: '2023-12-05',
+    delivery_date: '2023-12-10',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2002',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-TABL-22',
+    product_name: 'Italian White Marble Dining Table',
+    category: 'Table',
+    price: 68000,
+    order_date: '2024-02-14',
+    delivery_date: '2024-02-19',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2003',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-CHAIR-23',
+    product_name: 'Set of 6 Solid Wood Dining Chairs',
+    category: 'Chair',
+    price: 42000,
+    order_date: '2024-02-14',
+    delivery_date: '2024-02-19',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2004',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-BED-24',
+    product_name: 'Solid Sheesham Wood Queen Bed',
+    category: 'Bed',
+    price: 54000,
+    order_date: '2024-05-10',
+    delivery_date: '2024-05-15',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2005',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-WARD-25',
+    product_name: 'Sliding Door Wardrobe with LED Sensor',
+    category: 'Wardrobe',
+    price: 62000,
+    order_date: '2024-08-20',
+    delivery_date: '2024-08-25',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2006',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-CAB-26',
+    product_name: 'Solid Wood Bar Cabinet with Glass Rack',
+    category: 'Cabinet',
+    price: 38000,
+    order_date: '2024-11-05',
+    delivery_date: '2024-11-09',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2007',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-CHAIR-27',
+    product_name: 'Rocking Lounge Chair with Ottoman',
+    category: 'Chair',
+    price: 26000,
+    order_date: '2025-01-18',
+    delivery_date: '2025-01-22',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-2008',
+    customer_id: 'CUS-1025',
+    product_id: 'PRD-TABL-28',
+    product_name: 'Side Table Set of 2 Sheesham Wood',
+    category: 'Table',
+    price: 12500,
+    order_date: '2025-02-28',
+    delivery_date: '2025-03-03',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+
+  // CUS-1026 (Rahul Verma - 10 orders, 4 returns, 2 Confirmed Fraud)
+  {
+    order_id: 'ORD-3001',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-SOFA-31',
+    product_name: 'Fabric Corner Sofa 5-Seater Grey',
+    category: 'Sofa',
+    price: 46000,
+    order_date: '2024-01-25',
+    delivery_date: '2024-01-30',
+    condition: 'Fabric Damaged',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Confirmed Fraud'
+  },
+  {
+    order_id: 'ORD-3002',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-BED-32',
+    product_name: 'Upholstered King Bed with Storage',
+    category: 'Bed',
+    price: 49000,
+    order_date: '2024-03-10',
+    delivery_date: '2024-03-15',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-3003',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-TABL-33',
+    product_name: 'Extendable Dining Table 8-Seater',
+    category: 'Table',
+    price: 36000,
+    order_date: '2024-04-20',
+    delivery_date: '2024-04-25',
+    condition: 'Cracked Glass',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-3004',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-CHAIR-34',
+    product_name: 'Gaming Chair with Lumbar Support',
+    category: 'Chair',
+    price: 18000,
+    order_date: '2024-06-08',
+    delivery_date: '2024-06-12',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-3005',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-WARD-35',
+    product_name: 'Modular 3-Door Wardrobe Matte Black',
+    category: 'Wardrobe',
+    price: 39500,
+    order_date: '2024-07-28',
+    delivery_date: '2024-08-02',
+    condition: 'Damaged Panel',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Confirmed Fraud'
+  },
+  {
+    order_id: 'ORD-3006',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-CAB-36',
+    product_name: 'Shoe Rack Bench with Cushion Top',
+    category: 'Cabinet',
+    price: 11000,
+    order_date: '2024-09-15',
+    delivery_date: '2024-09-18',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-3007',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-TABL-37',
+    product_name: 'Coffee Table with Lift-Top Mechanism',
+    category: 'Table',
+    price: 16500,
+    order_date: '2024-11-02',
+    delivery_date: '2024-11-06',
+    condition: 'Hinge Defect',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-3008',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-SOFA-38',
+    product_name: '2-Seater Loveseat Navy Blue',
+    category: 'Sofa',
+    price: 28000,
+    order_date: '2024-12-14',
+    delivery_date: '2024-12-19',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-3009',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-CHAIR-39',
+    product_name: 'Dining Chairs Set of 4 Walnut Finish',
+    category: 'Chair',
+    price: 22000,
+    order_date: '2025-01-20',
+    delivery_date: '2025-01-24',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-3010',
+    customer_id: 'CUS-1026',
+    product_id: 'PRD-BED-40',
+    product_name: 'Single Bed with Trundle Drawer',
+    category: 'Bed',
+    price: 27500,
+    order_date: '2025-02-15',
+    delivery_date: '2025-02-19',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+
+  // CUS-1027 (Ananya Iyer - 5 orders, 2 returns, Genuine)
+  {
+    order_id: 'ORD-4001',
+    customer_id: 'CUS-1027',
+    product_id: 'PRD-TABL-41',
+    product_name: '6-Seater Rosewood Dining Table',
+    category: 'Table',
+    price: 34000,
+    order_date: '2023-09-10',
+    delivery_date: '2023-09-15',
+    condition: 'Corner Chip',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-4002',
+    customer_id: 'CUS-1027',
+    product_id: 'PRD-CHAIR-42',
+    product_name: 'Cane Back Dining Chairs (Pair)',
+    category: 'Chair',
+    price: 15000,
+    order_date: '2023-11-12',
+    delivery_date: '2023-11-16',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-4003',
+    customer_id: 'CUS-1027',
+    product_id: 'PRD-SOFA-43',
+    product_name: '3-Seater Wooden Sofa Frame Sheesham',
+    category: 'Sofa',
+    price: 39000,
+    order_date: '2024-03-05',
+    delivery_date: '2024-03-10',
+    condition: 'Wood Crack in Transit',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-4004',
+    customer_id: 'CUS-1027',
+    product_id: 'PRD-BED-44',
+    product_name: 'Poster Bed King Size Teak Wood',
+    category: 'Bed',
+    price: 58000,
+    order_date: '2024-07-15',
+    delivery_date: '2024-07-20',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-4005',
+    customer_id: 'CUS-1027',
+    product_id: 'PRD-CAB-45',
+    product_name: 'Crockery Unit with Brass Inlay',
+    category: 'Cabinet',
+    price: 31000,
+    order_date: '2025-01-05',
+    delivery_date: '2025-01-10',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+
+  // CUS-1028 (Vikram Mehta - 15 orders, 1 return, High Loyalty)
+  {
+    order_id: 'ORD-5001',
+    customer_id: 'CUS-1028',
+    product_id: 'PRD-SOFA-51',
+    product_name: 'Recliner Sofa 3+2 Set Charcoal',
+    category: 'Sofa',
+    price: 72000,
+    order_date: '2024-06-20',
+    delivery_date: '2024-06-25',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-5002',
+    customer_id: 'CUS-1028',
+    product_id: 'PRD-TABL-52',
+    product_name: 'Solid Wood Center Coffee Table',
+    category: 'Table',
+    price: 18000,
+    order_date: '2024-07-12',
+    delivery_date: '2024-07-16',
+    condition: 'Surface Dent',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-5003',
+    customer_id: 'CUS-1028',
+    product_id: 'PRD-BED-53',
+    product_name: 'Platform Bed with Headboard Storage',
+    category: 'Bed',
+    price: 44000,
+    order_date: '2024-08-18',
+    delivery_date: '2024-08-23',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-5004',
+    customer_id: 'CUS-1028',
+    product_id: 'PRD-WARD-54',
+    product_name: '3-Door Wardrobe Oak Wood Finish',
+    category: 'Wardrobe',
+    price: 36000,
+    order_date: '2024-09-22',
+    delivery_date: '2024-09-27',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-5005',
+    customer_id: 'CUS-1028',
+    product_id: 'PRD-CAB-55',
+    product_name: 'Media Entertainment Center Wall Unit',
+    category: 'Cabinet',
+    price: 29000,
+    order_date: '2024-11-10',
+    delivery_date: '2024-11-15',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-5006',
+    customer_id: 'CUS-1028',
+    product_id: 'PRD-CHAIR-56',
+    product_name: 'Bar Stools Set of 2 Leatherette',
+    category: 'Chair',
+    price: 13500,
+    order_date: '2025-01-12',
+    delivery_date: '2025-01-16',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+
+  // CUS-1029 (Sneha Patel - 6 orders, 1 return, Pending outcome)
+  {
+    order_id: 'ORD-6001',
+    customer_id: 'CUS-1029',
+    product_id: 'PRD-SOFA-61',
+    product_name: 'Fabric 3-Seater Sofa Mustard Yellow',
+    category: 'Sofa',
+    price: 36000,
+    order_date: '2023-06-15',
+    delivery_date: '2023-06-20',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-6002',
+    customer_id: 'CUS-1029',
+    product_id: 'PRD-TABL-62',
+    product_name: 'Glass Top Coffee Table Gold Frame',
+    category: 'Table',
+    price: 15500,
+    order_date: '2024-01-18',
+    delivery_date: '2024-01-22',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-6003',
+    customer_id: 'CUS-1029',
+    product_id: 'PRD-BED-63',
+    product_name: 'Upholstered Queen Bed Beige Velvet',
+    category: 'Bed',
+    price: 46000,
+    order_date: '2024-05-14',
+    delivery_date: '2024-05-19',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-6004',
+    customer_id: 'CUS-1029',
+    product_id: 'PRD-WARD-64',
+    product_name: '2-Door Compact Wardrobe White Gloss',
+    category: 'Wardrobe',
+    price: 24000,
+    order_date: '2024-09-08',
+    delivery_date: '2024-09-12',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-6005',
+    customer_id: 'CUS-1029',
+    product_id: 'PRD-CAB-65',
+    product_name: 'Sideboard Buffet Table Wood Finish',
+    category: 'Cabinet',
+    price: 28500,
+    order_date: '2025-01-28',
+    delivery_date: '2025-02-02',
+    condition: 'Door Misaligned',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Pending'
+  },
+
+  // CUS-1030 (Amitabh Roy - 4 orders, 1 return, Unknown outcome)
+  {
+    order_id: 'ORD-7001',
+    customer_id: 'CUS-1030',
+    product_id: 'PRD-BED-71',
+    product_name: 'Solid Wood Bunk Bed for Kids',
+    category: 'Bed',
+    price: 42000,
+    order_date: '2024-03-12',
+    delivery_date: '2024-03-17',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-7002',
+    customer_id: 'CUS-1030',
+    product_id: 'PRD-TABL-72',
+    product_name: 'Study Table with Bookshelf',
+    category: 'Table',
+    price: 17500,
+    order_date: '2024-07-04',
+    delivery_date: '2024-07-09',
+    condition: 'Missing Hardware Screws',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Unknown'
+  },
+  {
+    order_id: 'ORD-7003',
+    customer_id: 'CUS-1030',
+    product_id: 'PRD-CHAIR-73',
+    product_name: 'Ergonomic Study Chair Blue',
+    category: 'Chair',
+    price: 9500,
+    order_date: '2024-10-15',
+    delivery_date: '2024-10-19',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+
+  // CUS-1031 (Kavita Nair - 3 orders, 0 returns)
+  {
+    order_id: 'ORD-8001',
+    customer_id: 'CUS-1031',
+    product_id: 'PRD-SOFA-81',
+    product_name: '2-Seater Loveseat Linen Fabric',
+    category: 'Sofa',
+    price: 27000,
+    order_date: '2023-10-02',
+    delivery_date: '2023-10-07',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-8002',
+    customer_id: 'CUS-1031',
+    product_id: 'PRD-TABL-82',
+    product_name: 'Round Coffee Table Solid Sheesham',
+    category: 'Table',
+    price: 14000,
+    order_date: '2024-04-16',
+    delivery_date: '2024-04-20',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-8003',
+    customer_id: 'CUS-1031',
+    product_id: 'PRD-CAB-83',
+    product_name: 'Shoe Storage Cabinet with Louvered Doors',
+    category: 'Cabinet',
+    price: 12500,
+    order_date: '2024-12-08',
+    delivery_date: '2024-12-12',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+
+  // CUS-1032 (Rohan Deshmukh - 7 orders, 2 returns: 1 Genuine, 1 Confirmed Fraud)
+  {
+    order_id: 'ORD-9001',
+    customer_id: 'CUS-1032',
+    product_id: 'PRD-SOFA-91',
+    product_name: '3-Seater Leatherette Sofa Black',
+    category: 'Sofa',
+    price: 38000,
+    order_date: '2024-04-20',
+    delivery_date: '2024-04-25',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-9002',
+    customer_id: 'CUS-1032',
+    product_id: 'PRD-BED-92',
+    product_name: 'Queen Bed with Hydraulic Lift',
+    category: 'Bed',
+    price: 49000,
+    order_date: '2024-07-02',
+    delivery_date: '2024-07-07',
+    condition: 'Frame Broken Upon Assembly',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Genuine'
+  },
+  {
+    order_id: 'ORD-9003',
+    customer_id: 'CUS-1032',
+    product_id: 'PRD-TABL-93',
+    product_name: 'Dining Table 4-Seater Glass Top',
+    category: 'Table',
+    price: 21000,
+    order_date: '2024-09-18',
+    delivery_date: '2024-09-22',
+    condition: 'Severe Intentional Cuts on Surface',
+    order_status: 'Returned',
+    return_status: 'Returned',
+    outcome: 'Confirmed Fraud'
+  },
+  {
+    order_id: 'ORD-9004',
+    customer_id: 'CUS-1032',
+    product_id: 'PRD-CHAIR-94',
+    product_name: 'Reclining Armchair Brown',
+    category: 'Chair',
+    price: 19500,
+    order_date: '2024-11-20',
+    delivery_date: '2024-11-24',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  },
+  {
+    order_id: 'ORD-9005',
+    customer_id: 'CUS-1032',
+    product_id: 'PRD-WARD-95',
+    product_name: '2-Door Wardrobe with Drawers',
+    category: 'Wardrobe',
+    price: 28000,
+    order_date: '2025-01-14',
+    delivery_date: '2025-01-18',
+    condition: 'Delivered Intact',
+    order_status: 'Completed',
+    return_status: 'No Return',
+    outcome: 'Completed'
+  }
+];
+
+export const INITIAL_RETURNS = [
+  // CUS-1024 Previous Returns
+  {
+    return_id: 'RET-2024-001021',
+    order_id: 'ORD-1002',
+    customer_id: 'CUS-1024',
+    customer_name: 'John Smith',
+    product: 'Solid Teak Wood 6-Seater Dining Table',
+    category: 'Table',
+    reason: 'Damaged on delivery',
+    condition: 'Transit Scratch & Chipped Edge',
+    return_date: '2024-05-25',
+    evidence_count: 3,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=500&auto=format&fit=crop&q=60',
+      'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-05-28',
+    notes: 'Visible courier handling damage verified by carrier manifest.'
+  },
+  {
+    return_id: 'RET-2024-001088',
+    order_id: 'ORD-1003',
+    customer_id: 'CUS-1024',
+    customer_name: 'John Smith',
+    product: 'Ergonomic Mesh High-Back Office Chair',
+    category: 'Chair',
+    reason: 'Missing parts / accessories',
+    condition: 'Reported Missing Base Mechanism',
+    return_date: '2024-06-06',
+    evidence_count: 2,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1580481077195-7798835824c0?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Investigation Closed',
+    outcome: 'Confirmed Fraud',
+    decision_date: '2024-06-12',
+    notes: 'Item returned in non-original package with third-party broken chair substituted inside.'
+  },
+  {
+    return_id: 'RET-2024-001150',
+    order_id: 'ORD-1005',
+    customer_id: 'CUS-1024',
+    customer_name: 'John Smith',
+    product: '4-Door Wardrobe with Mirror',
+    category: 'Wardrobe',
+    reason: 'Defective mechanism',
+    condition: 'Door Hinges Bent',
+    return_date: '2024-08-08',
+    evidence_count: 4,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-08-11',
+    notes: 'Assembly team documented factory alignment defect in hinge bracket.'
+  },
+  {
+    return_id: 'RET-2024-001290',
+    order_id: 'ORD-1007',
+    customer_id: 'CUS-1024',
+    customer_name: 'John Smith',
+    product: 'Accent Velvet Armchair Emerald Green',
+    category: 'Chair',
+    reason: 'Color / fabric mismatch',
+    condition: 'Fabric Discoloration',
+    return_date: '2024-10-10',
+    evidence_count: 2,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-10-14',
+    notes: 'Batch dyeing variance acknowledged by supplier.'
+  },
+
+  // CUS-1026 Previous Returns
+  {
+    return_id: 'RET-2024-002010',
+    order_id: 'ORD-3001',
+    customer_id: 'CUS-1026',
+    customer_name: 'Rahul Verma',
+    product: 'Fabric Corner Sofa 5-Seater Grey',
+    category: 'Sofa',
+    reason: 'Damaged on delivery',
+    condition: 'Multiple Intentional Blade Slashes',
+    return_date: '2024-02-01',
+    evidence_count: 3,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Investigation Closed',
+    outcome: 'Confirmed Fraud',
+    decision_date: '2024-02-08',
+    notes: 'Evidence photos showed unboxed pristine condition; damage inflicted post-delivery.'
+  },
+  {
+    return_id: 'RET-2024-002045',
+    order_id: 'ORD-3003',
+    customer_id: 'CUS-1026',
+    customer_name: 'Rahul Verma',
+    product: 'Extendable Dining Table 8-Seater',
+    category: 'Table',
+    reason: 'Broken glass / top',
+    condition: 'Cracked Glass Top',
+    return_date: '2024-04-26',
+    evidence_count: 2,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-04-30',
+    notes: 'Transit impact damage confirmed by packaging crush marks.'
+  },
+  {
+    return_id: 'RET-2024-002105',
+    order_id: 'ORD-3005',
+    customer_id: 'CUS-1026',
+    customer_name: 'Rahul Verma',
+    product: 'Modular 3-Door Wardrobe Matte Black',
+    category: 'Wardrobe',
+    reason: 'Missing parts / panel swap',
+    condition: 'Damaged Panel Swapped',
+    return_date: '2024-08-04',
+    evidence_count: 3,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Investigation Closed',
+    outcome: 'Confirmed Fraud',
+    decision_date: '2024-08-12',
+    notes: 'Customer returned old laminate panels from a different competitor brand.'
+  },
+  {
+    return_id: 'RET-2024-002188',
+    order_id: 'ORD-3007',
+    customer_id: 'CUS-1026',
+    customer_name: 'Rahul Verma',
+    product: 'Coffee Table with Lift-Top Mechanism',
+    category: 'Table',
+    reason: 'Defective lift mechanism',
+    condition: 'Hydraulic Hinge Defect',
+    return_date: '2024-11-08',
+    evidence_count: 2,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-11-12',
+    notes: 'Spring failure verified on inspection.'
+  },
+
+  // CUS-1027 Previous Returns
+  {
+    return_id: 'RET-2023-003012',
+    order_id: 'ORD-4001',
+    customer_id: 'CUS-1027',
+    customer_name: 'Ananya Iyer',
+    product: '6-Seater Rosewood Dining Table',
+    category: 'Table',
+    reason: 'Transit chip on corner',
+    condition: 'Corner Wood Splintered',
+    return_date: '2023-09-17',
+    evidence_count: 3,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2023-09-20',
+    notes: 'Carrier damaged outer crate; full refund approved.'
+  },
+  {
+    return_id: 'RET-2024-003080',
+    order_id: 'ORD-4003',
+    customer_id: 'CUS-1027',
+    customer_name: 'Ananya Iyer',
+    product: '3-Seater Wooden Sofa Frame Sheesham',
+    category: 'Sofa',
+    reason: 'Structural wood crack',
+    condition: 'Base Rail Split',
+    return_date: '2024-03-12',
+    evidence_count: 4,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-03-16',
+    notes: 'Natural wood grain split during shipping.'
+  },
+
+  // CUS-1028 Previous Returns
+  {
+    return_id: 'RET-2024-004015',
+    order_id: 'ORD-5002',
+    customer_id: 'CUS-1028',
+    customer_name: 'Vikram Mehta',
+    product: 'Solid Wood Center Coffee Table',
+    category: 'Table',
+    reason: 'Surface scratch',
+    condition: 'Minor Surface Dent',
+    return_date: '2024-07-18',
+    evidence_count: 2,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-07-22',
+    notes: 'Replaced with fresh unit.'
+  },
+
+  // CUS-1029 Previous Returns (Pending)
+  {
+    return_id: 'RET-2025-005020',
+    order_id: 'ORD-6005',
+    customer_id: 'CUS-1029',
+    customer_name: 'Sneha Patel',
+    product: 'Sideboard Buffet Table Wood Finish',
+    category: 'Cabinet',
+    reason: 'Door Misaligned & Scratched',
+    condition: 'Cabinet Door Gap',
+    return_date: '2025-02-05',
+    evidence_count: 3,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Under Triage',
+    outcome: 'Pending',
+    decision_date: '',
+    notes: 'Awaiting technician physical inspection report.'
+  },
+
+  // CUS-1030 Previous Returns (Unknown)
+  {
+    return_id: 'RET-2024-006008',
+    order_id: 'ORD-7002',
+    customer_id: 'CUS-1030',
+    customer_name: 'Amitabh Roy',
+    product: 'Study Table with Bookshelf',
+    category: 'Table',
+    reason: 'Missing Hardware Screws',
+    condition: 'Partially Assembled',
+    return_date: '2024-07-10',
+    evidence_count: 1,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Closed Without Conclusion',
+    outcome: 'Unknown',
+    decision_date: '2024-07-25',
+    notes: 'Customer withdrew claim after finding missing hardware kit.'
+  },
+
+  // CUS-1032 Previous Returns
+  {
+    return_id: 'RET-2024-007010',
+    order_id: 'ORD-9002',
+    customer_id: 'CUS-1032',
+    customer_name: 'Rohan Deshmukh',
+    product: 'Queen Bed with Hydraulic Lift',
+    category: 'Bed',
+    reason: 'Damaged on delivery',
+    condition: 'Frame Broken Upon Assembly',
+    return_date: '2024-07-09',
+    evidence_count: 3,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Reviewed & Resolved',
+    outcome: 'Genuine',
+    decision_date: '2024-07-14',
+    notes: 'Factory assembly technician confirmed material defect.'
+  },
+  {
+    return_id: 'RET-2024-007085',
+    order_id: 'ORD-9003',
+    customer_id: 'CUS-1032',
+    customer_name: 'Rohan Deshmukh',
+    product: 'Dining Table 4-Seater Glass Top',
+    category: 'Table',
+    reason: 'Damaged on delivery',
+    condition: 'Severe Intentional Cuts on Surface',
+    return_date: '2024-09-24',
+    evidence_count: 4,
+    evidence_images: [
+      'https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=500&auto=format&fit=crop&q=60'
+    ],
+    review_status: 'Investigation Closed',
+    outcome: 'Confirmed Fraud',
+    decision_date: '2024-10-02',
+    notes: 'Physical triage laboratory verified damage caused with power cutting tool.'
+  }
+];
