@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Filter, X, ShieldAlert, Layers, CheckCircle2, RotateCcw } from 'lucide-react';
+import { Search, X, ShieldAlert, Layers, CheckCircle2, RotateCcw, Filter } from 'lucide-react';
 
 export default function ReviewFilters({
   searchQuery,
@@ -24,19 +24,19 @@ export default function ReviewFilters({
   };
 
   return (
-    <div className="review-filters-card form-card mb-4">
-      {/* Top Queue Preset Tabs */}
-      <div className="review-queue-preset-tabs" role="tablist" aria-label="Review Queue Presets">
+    <div className="rq-filters-card">
+      {/* 1. Queue Preset Tabs */}
+      <div className="rq-preset-tabs" role="tablist" aria-label="Review Queue Presets">
         <button
           type="button"
           role="tab"
           aria-selected={queueTab === 'PRIMARY'}
-          className={`queue-preset-tab ${queueTab === 'PRIMARY' ? 'active' : ''}`}
+          className={`rq-tab ${queueTab === 'PRIMARY' ? 'rq-tab-active rq-tab-primary' : ''}`}
           onClick={() => onQueueTabChange('PRIMARY')}
         >
-          <ShieldAlert size={15} className="text-red-400" />
-          <span>Primary Queue (High & Critical)</span>
-          <span className="preset-count-badge badge-high-count">
+          <ShieldAlert size={15} className="rq-tab-icon" />
+          <span className="rq-tab-label">Primary Queue (High &amp; Critical)</span>
+          <span className="rq-count-badge rq-count-high">
             {counts.primary || 0}
           </span>
         </button>
@@ -45,12 +45,12 @@ export default function ReviewFilters({
           type="button"
           role="tab"
           aria-selected={queueTab === 'PENDING'}
-          className={`queue-preset-tab ${queueTab === 'PENDING' ? 'active' : ''}`}
+          className={`rq-tab ${queueTab === 'PENDING' ? 'rq-tab-active rq-tab-pending' : ''}`}
           onClick={() => onQueueTabChange('PENDING')}
         >
-          <Layers size={15} className="text-amber-400" />
-          <span>All Pending Decisions</span>
-          <span className="preset-count-badge">
+          <Layers size={15} className="rq-tab-icon" />
+          <span className="rq-tab-label">All Pending Decisions</span>
+          <span className="rq-count-badge">
             {counts.pending || 0}
           </span>
         </button>
@@ -59,12 +59,12 @@ export default function ReviewFilters({
           type="button"
           role="tab"
           aria-selected={queueTab === 'RESOLVED'}
-          className={`queue-preset-tab ${queueTab === 'RESOLVED' ? 'active' : ''}`}
+          className={`rq-tab ${queueTab === 'RESOLVED' ? 'rq-tab-active rq-tab-resolved' : ''}`}
           onClick={() => onQueueTabChange('RESOLVED')}
         >
-          <CheckCircle2 size={15} className="text-emerald-400" />
-          <span>Completed / Decided</span>
-          <span className="preset-count-badge badge-resolved-count">
+          <CheckCircle2 size={15} className="rq-tab-icon" />
+          <span className="rq-tab-label">Completed / Decided</span>
+          <span className="rq-count-badge rq-count-resolved">
             {counts.resolved || 0}
           </span>
         </button>
@@ -73,25 +73,25 @@ export default function ReviewFilters({
           type="button"
           role="tab"
           aria-selected={queueTab === 'ALL'}
-          className={`queue-preset-tab ${queueTab === 'ALL' ? 'active' : ''}`}
+          className={`rq-tab ${queueTab === 'ALL' ? 'rq-tab-active' : ''}`}
           onClick={() => onQueueTabChange('ALL')}
         >
-          <span>All Returns (All Risk Levels)</span>
-          <span className="preset-count-badge">
+          <span className="rq-tab-label">All Returns (All Levels)</span>
+          <span className="rq-count-badge">
             {counts.all || 0}
           </span>
         </button>
       </div>
 
-      {/* Main Search & Dropdown Filter Row */}
-      <div className="review-filter-inputs-grid">
+      {/* 2. Search & Dropdown Filter Row */}
+      <div className="rq-filter-row">
         {/* Search Input */}
-        <div className="filter-search-wrapper">
-          <Search size={16} className="search-icon text-dim" />
+        <div className="rq-search-box">
+          <Search size={16} className="rq-search-icon" />
           <input
             type="text"
-            className="filter-input search-input"
-            placeholder="Search by Return ID, Customer, Order ID, or Product..."
+            className="rq-search-input"
+            placeholder="Search return ID, customer, order ID, product..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             aria-label="Search review cases"
@@ -99,78 +99,79 @@ export default function ReviewFilters({
           {searchQuery && (
             <button
               type="button"
-              className="btn-clear-search"
+              className="rq-clear-search"
               onClick={() => onSearchChange('')}
-              title="Clear search query"
+              title="Clear search"
             >
               <X size={14} />
             </button>
           )}
         </div>
 
-        {/* Risk Category Filter */}
-        <div className="filter-select-group">
-          <label htmlFor="risk-select" className="filter-select-label">Risk Category:</label>
-          <select
-            id="risk-select"
-            className="filter-select"
-            value={riskFilter}
-            onChange={(e) => onRiskFilterChange(e.target.value)}
-          >
-            <option value="ALL">All Categories</option>
-            <option value="CRITICAL">Critical Risk (70–100)</option>
-            <option value="HIGH">High Risk (50–69)</option>
-            <option value="MEDIUM">Medium Risk (25–49)</option>
-            <option value="LOW">Low Risk (0–24)</option>
-          </select>
-        </div>
+        {/* Dropdowns */}
+        <div className="rq-dropdowns-group">
+          {/* Risk Category */}
+          <div className="rq-select-wrap">
+            <span className="rq-select-lbl">Risk Category</span>
+            <select
+              className="rq-select"
+              value={riskFilter}
+              onChange={(e) => onRiskFilterChange(e.target.value)}
+            >
+              <option value="ALL">All Categories</option>
+              <option value="CRITICAL">Critical Risk (70–100)</option>
+              <option value="HIGH">High Risk (50–69)</option>
+              <option value="MEDIUM">Medium Risk (25–49)</option>
+              <option value="LOW">Low Risk (0–24)</option>
+            </select>
+          </div>
 
-        {/* Review Status Filter */}
-        <div className="filter-select-group">
-          <label htmlFor="status-select" className="filter-select-label">Review Status:</label>
-          <select
-            id="status-select"
-            className="filter-select"
-            value={statusFilter}
-            onChange={(e) => onStatusFilterChange(e.target.value)}
-          >
-            <option value="ALL">All Statuses</option>
-            <option value="PENDING">Pending Review</option>
-            <option value="IN_REVIEW">In Review</option>
-            <option value="APPROVED">Approved (Pickup Scheduled)</option>
-            <option value="REJECTED">Rejected</option>
-            <option value="REQUEST_MORE_EVIDENCE">More Evidence Requested</option>
-            <option value="ESCALATED">Escalated to Management</option>
-          </select>
-        </div>
+          {/* Review Status */}
+          <div className="rq-select-wrap">
+            <span className="rq-select-lbl">Review Status</span>
+            <select
+              className="rq-select"
+              value={statusFilter}
+              onChange={(e) => onStatusFilterChange(e.target.value)}
+            >
+              <option value="ALL">All Statuses</option>
+              <option value="PENDING">Pending Review</option>
+              <option value="IN_REVIEW">In Review</option>
+              <option value="APPROVED">Approved</option>
+              <option value="REJECTED">Rejected</option>
+              <option value="REQUEST_MORE_EVIDENCE">More Evidence</option>
+              <option value="ESCALATED">Escalated</option>
+            </select>
+          </div>
 
-        {/* Reviewer Role Filter */}
-        <div className="filter-select-group">
-          <label htmlFor="reviewer-select" className="filter-select-label">Reviewer Role:</label>
-          <select
-            id="reviewer-select"
-            className="filter-select"
-            value={reviewerFilter}
-            onChange={(e) => onReviewerFilterChange(e.target.value)}
-          >
-            <option value="ALL">All Roles</option>
-            <option value="Dispatcher">Dispatcher</option>
-            <option value="Operations Manager">Operations Manager</option>
-            <option value="Senior Operations Manager">Senior Operations Manager</option>
-          </select>
-        </div>
+          {/* Reviewer Role */}
+          <div className="rq-select-wrap">
+            <span className="rq-select-lbl">Reviewer Role</span>
+            <select
+              className="rq-select"
+              value={reviewerFilter}
+              onChange={(e) => onReviewerFilterChange(e.target.value)}
+            >
+              <option value="ALL">All Roles</option>
+              <option value="Dispatcher">Dispatcher</option>
+              <option value="Operations Manager">Operations Manager</option>
+              <option value="Senior Operations Manager">Senior Operations Manager</option>
+            </select>
+          </div>
 
-        {/* Reset Filters button */}
-        {hasActiveFilters && (
-          <button
-            type="button"
-            className="btn-ghost btn-sm btn-reset-filters"
-            onClick={handleClearFilters}
-            title="Reset all search filters"
-          >
-            <RotateCcw size={13} /> Reset Filters
-          </button>
-        )}
+          {/* Reset Filters */}
+          {hasActiveFilters && (
+            <button
+              type="button"
+              className="rq-reset-btn"
+              onClick={handleClearFilters}
+              title="Reset all search filters"
+            >
+              <RotateCcw size={13} />
+              <span>Reset</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

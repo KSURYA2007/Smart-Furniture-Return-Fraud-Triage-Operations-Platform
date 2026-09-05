@@ -165,74 +165,6 @@ export default function NewReturn({ onSuccess, greeting }) {
     }
   };
 
-  // Populate sample demo data for quick testing
-  const handlePrefillDemo = () => {
-    const today = new Date();
-    const purchaseDate = new Date(today);
-    purchaseDate.setDate(today.getDate() - 14);
-    const deliveryDate = new Date(today);
-    deliveryDate.setDate(today.getDate() - 7);
-    const pickupDate = new Date(today);
-    pickupDate.setDate(today.getDate() + 2);
-
-    // Sample placeholder SVG image as data URL for instant evidence
-    const canvas = document.createElement('canvas');
-    canvas.width = 400;
-    canvas.height = 300;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#f1f5f9';
-    ctx.fillRect(0, 0, 400, 300);
-    ctx.fillStyle = '#3b82f6';
-    ctx.fillRect(50, 50, 300, 200);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 20px sans-serif';
-    ctx.fillText('Damaged Sofa Cushion', 80, 160);
-    const sampleImgDataUrl = canvas.toDataURL('image/png');
-
-    setFormData({
-      customer: {
-        customer_id: 'CUS-1024',
-        name: 'John Smith',
-        email: 'john@example.com',
-        phone: '+91 98765 43210'
-      },
-      order: {
-        order_id: 'ORD-5821',
-        product_id: 'PRD-SOFA-889',
-        product_name: '3-Seater Velvet Sofa - Royal Blue',
-        category: 'Sofa',
-        price: 899.99,
-        purchase_date: purchaseDate.toISOString().split('T')[0],
-        delivery_date: deliveryDate.toISOString().split('T')[0]
-      },
-      return: {
-        reason: 'Damaged on delivery',
-        additional_reason: '',
-        condition: 'Major Damage',
-        description: 'Deep tear on the left side armrest cushion with broken wooden frame support underneath upon unboxing.'
-      },
-      evidence: [
-        {
-          id: `img_demo_${Date.now()}_1`,
-          name: 'sofa_armrest_tear.png',
-          size: 142000,
-          type: 'image/png',
-          dataUrl: sampleImgDataUrl,
-          uploadedAt: new Date().toISOString()
-        }
-      ],
-      pickup: {
-        address: '42 Orchard Avenue, Flat 4B',
-        city: 'Chennai',
-        postal_code: '600001',
-        preferred_date: pickupDate.toISOString().split('T')[0],
-        instructions: 'Building has freight elevator at the rear. Call 30 minutes before arrival.'
-      }
-    });
-
-    setErrors({});
-  };
-
   const handleResetForm = () => {
     if (window.confirm('Are you sure you want to reset all fields in this return request?')) {
       setFormData(INITIAL_STATE);
@@ -348,23 +280,15 @@ export default function NewReturn({ onSuccess, greeting }) {
           </p>
         </div>
 
-        {/* Quick Demo Toolbar */}
+        {/* Form Toolbar */}
         <div className="demo-actions-bar">
-          <button
-            type="button"
-            onClick={handlePrefillDemo}
-            className="btn-secondary btn-sm"
-            title="Auto-fill sample furniture return data for testing"
-          >
-            <Sparkles size={15} /> Auto-fill Sample Data
-          </button>
           <button
             type="button"
             onClick={handleResetForm}
             className="btn-ghost btn-sm"
             title="Clear all fields"
           >
-            <RefreshCw size={14} /> Clear Form
+            <RefreshCw size={14} /> Reset Form
           </button>
         </div>
       </header>

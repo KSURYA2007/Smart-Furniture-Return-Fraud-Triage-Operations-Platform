@@ -20,8 +20,15 @@ export default function TriageTable({
 }) {
   if (!triageList || triageList.length === 0) {
     return (
-      <div className="empty-table-box">
-        <p className="text-muted text-sm">No return requests match the selected filter criteria.</p>
+      <div className="triage-empty-state">
+        <div className="triage-empty-icon-wrap">
+          <ShieldAlert size={32} className="triage-empty-icon" />
+        </div>
+        <h3 className="triage-empty-title">Operational Triage Queue is Clear</h3>
+        <p className="triage-empty-desc">
+          No return claims match your filter criteria or require automated triage.
+          When customers submit claims in the Customer Portal, they will be automatically evaluated and routed here in real time.
+        </p>
       </div>
     );
   }

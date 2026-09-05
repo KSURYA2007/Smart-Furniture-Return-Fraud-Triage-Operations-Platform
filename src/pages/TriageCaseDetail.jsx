@@ -211,7 +211,7 @@ export default function TriageCaseDetail({
                 supportingEvidence={triageResult.supporting_evidence}
                 onViewCustomer={onViewCustomer}
                 onViewEvidence={onViewEvidence}
-                customerId={customer.customer_id || returnRecord.customer_id}
+                customerId={customer?.customer_id || returnRecord.customer_id}
                 returnId={returnRecord.return_id}
               />
             </section>

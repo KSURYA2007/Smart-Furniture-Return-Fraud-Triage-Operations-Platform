@@ -83,10 +83,10 @@ export default function RiskScoreGauge({ triageResult }) {
           </div>
 
           <div className="recommendation-box">
-            <span className="rec-heading font-semibold text-white flex items-center gap-1.5 mb-1">
-              <Info size={14} className="text-primary-light" /> Action Recommendation:
+            <span className="rec-heading font-semibold text-slate-900 flex items-center gap-1.5 mb-1">
+              <Info size={14} className="text-primary" /> Action Recommendation:
             </span>
-            <p className="rec-text text-secondary text-sm">
+            <p className="rec-text text-slate-600 text-sm">
               {recommendation}
             </p>
           </div>
@@ -94,13 +94,13 @@ export default function RiskScoreGauge({ triageResult }) {
       </div>
 
       {/* Legitimate Customer Protection Banner */}
-      {isLegitimateProtected && (
+      {(is_legitimate_protected || triageResult.isLegitimateProtected) && (
         <div className="legitimate-protection-callout">
           <div className="flex items-start gap-2.5">
-            <Sparkles size={18} className="text-emerald shrink-0 mt-0.5" />
+            <Sparkles size={18} className="text-emerald-600 shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold text-white text-sm block">Legitimate Customer Protection Active</span>
-              <p className="text-xs text-secondary mt-0.5">
+              <span className="font-bold text-slate-900 text-sm block">Legitimate Customer Protection Active</span>
+              <p className="text-xs text-slate-600 mt-0.5">
                 {legitimate_protection_note || 'Verified photographic proof submitted. Recommended to avoid unnecessary processing delays.'}
               </p>
             </div>

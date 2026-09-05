@@ -19,13 +19,14 @@ import {
 export default function ReviewQueueTable({ cases = [], onSelectCase }) {
   if (!cases || cases.length === 0) {
     return (
-      <div className="review-empty-queue form-card text-center p-8">
-        <div className="empty-icon-wrap mx-auto mb-3">
-          <CheckCircle2 size={36} className="text-emerald-400" />
+      <div className="rq-empty-card">
+        <div className="rq-empty-icon-wrap">
+          <CheckCircle2 size={32} className="rq-empty-icon" />
         </div>
-        <h3 className="text-lg font-serif font-bold text-primary mb-1">Queue Clear</h3>
-        <p className="text-muted text-sm max-w-md mx-auto">
-          No return cases currently match the selected filter criteria or require urgent human intervention.
+        <h3 className="rq-empty-title">Human Review Queue is Clear</h3>
+        <p className="rq-empty-desc">
+          No return cases match the selected filter criteria or require manual specialist intervention. 
+          When high-risk claims or fraud anomalies are detected, they will be automatically escalated here.
         </p>
       </div>
     );

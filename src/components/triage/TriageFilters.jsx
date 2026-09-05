@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Filter, X, ArrowUpDown, ShieldAlert, Layers } from 'lucide-react';
+import { Search, X, ArrowUpDown, Shield, AlertTriangle, CheckCircle2, RotateCcw } from 'lucide-react';
 
 export default function TriageFilters({
   searchQuery,
@@ -24,15 +24,15 @@ export default function TriageFilters({
   );
 
   return (
-    <div className="triage-filters-card">
-      {/* Top Search & Sort Row */}
-      <div className="filters-search-row">
-        <div className="search-input-wrap flex-1">
-          <Search size={16} className="search-icon-inside" />
+    <div className="tf-container">
+      {/* Row 1: Search Bar & Sorting */}
+      <div className="tf-top-row">
+        <div className="tf-search-wrap">
+          <Search size={16} className="tf-search-icon" />
           <input
             type="text"
-            className="search-field"
-            placeholder="Search return ID, customer name, product, or reason..."
+            className="tf-search-input"
+            placeholder="Search return ID, customer name, product, or return reason..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
           />
@@ -40,8 +40,8 @@ export default function TriageFilters({
             <button 
               type="button" 
               onClick={() => onSearchChange('')} 
-              className="search-clear-btn"
-              aria-label="Clear search query"
+              className="tf-search-clear"
+              title="Clear search query"
             >
               <X size={14} />
             </button>
@@ -49,10 +49,10 @@ export default function TriageFilters({
         </div>
 
         {/* Sort Selector */}
-        <div className="sort-select-wrap">
-          <ArrowUpDown size={14} className="text-dim" />
+        <div className="tf-sort-wrap">
+          <ArrowUpDown size={14} className="tf-sort-icon" />
           <select
-            className="filter-select"
+            className="tf-sort-select"
             value={sortBy}
             onChange={(e) => onSortByChange(e.target.value)}
             aria-label="Sort returns queue"
@@ -66,28 +66,39 @@ export default function TriageFilters({
         </div>
       </div>
 
-      {/* Pill Filters Row */}
-      <div className="filters-pills-row">
-        {/* Risk Categories */}
-        <div className="filter-pill-group">
-          <span className="filter-group-label">Risk Category:</span>
-          {['ALL', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'].map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              className={`filter-pill-btn ${selectedCategory === cat ? 'active' : ''}`}
-              onClick={() => onCategoryChange(cat)}
-            >
-              {cat === 'ALL' ? 'All Risk' : cat}
-            </button>
-          ))}
+      {/* Row 2: Filter Segmented Controls & Dropdowns */}
+      <div className="tf-controls-row">
+        {/* Risk Category Segmented Pills */}
+        <div className="tf-filter-group">
+          <span className="tf-filter-label">Risk Category</span>
+          <div className="tf-pills-wrap">
+            {[
+              { id: 'ALL', label: 'All Risk' },
+              { id: 'LOW', label: 'Low', color: 'emerald' },
+              { id: 'MEDIUM', label: 'Medium', color: 'blue' },
+              { id: 'HIGH', label: 'High', color: 'amber' },
+              { id: 'CRITICAL', label: 'Critical', color: 'rose' }
+            ].map((cat) => {
+              const isActive = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={`tf-pill-btn ${isActive ? `tf-pill-active tf-pill-${cat.color || 'indigo'}` : ''}`}
+                  onClick={() => onCategoryChange(cat.id)}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Priority Filter */}
-        <div className="filter-dropdown-group">
-          <span className="filter-group-label">Priority:</span>
+        {/* Priority Dropdown */}
+        <div className="tf-filter-group">
+          <span className="tf-filter-label">Priority</span>
           <select
-            className="filter-select-mini"
+            className="tf-select"
             value={selectedPriority}
             onChange={(e) => onPriorityChange(e.target.value)}
           >
@@ -99,11 +110,11 @@ export default function TriageFilters({
           </select>
         </div>
 
-        {/* Evidence Strength Filter */}
-        <div className="filter-dropdown-group">
-          <span className="filter-group-label">Evidence:</span>
+        {/* Evidence Strength Dropdown */}
+        <div className="tf-filter-group">
+          <span className="tf-filter-label">Evidence</span>
           <select
-            className="filter-select-mini"
+            className="tf-select"
             value={selectedEvidenceStrength}
             onChange={(e) => onEvidenceStrengthChange(e.target.value)}
           >
@@ -114,23 +125,27 @@ export default function TriageFilters({
           </select>
         </div>
 
-        {/* Reset Filter Action */}
+        {/* Reset Filter Button */}
         {isFiltered && (
           <button
             type="button"
             onClick={onResetFilters}
-            className="btn-reset-filters text-xs text-secondary hover:text-white"
+            className="tf-reset-btn"
+            title="Reset all search and filter options"
           >
-            <X size={12} /> Reset Filters
+            <RotateCcw size={13} />
+            <span>Reset Filters</span>
           </button>
         )}
       </div>
 
-      {/* Results Counter Bar */}
-      <div className="filters-count-bar">
-        <span className="text-dim text-xs">
-          Showing <strong>{totalResults}</strong> evaluated return request{totalResults !== 1 ? 's' : ''}
-        </span>
+      {/* Row 3: Results Summary Count */}
+      <div className="tf-count-row">
+        <div className="tf-count-badge">
+          <span>Showing</span>
+          <strong className="tf-count-number">{totalResults}</strong>
+          <span>evaluated return claim{totalResults !== 1 ? 's' : ''}</span>
+        </div>
       </div>
     </div>
   );

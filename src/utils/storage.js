@@ -22,8 +22,33 @@ const STORAGE_KEYS = {
 /**
  * Initialize storage with default seed data if keys don't exist
  */
+export const DEMO_RETURN_IDS = new Set([
+  'RET-2024-001021', 'RET-2024-001022', 'RET-2024-001023', 'RET-2024-001024',
+  'RET-2024-001025', 'RET-2024-001026', 'RET-2024-001027', 'RET-2024-001028',
+  'RET-2024-001029', 'RET-2024-001030', 'RET-2024-003001', 'RET-2024-003002',
+  'RET-2024-003003', 'RET-2024-003004', 'RET-2024-003005', 'RET-2024-003006',
+  'RET-2024-003007', 'RET-2024-003008', 'RET-2024-003009'
+]);
+
+/**
+ * Initialize storage without demo returns.
+ * Cleans out any stale pre-seeded demo records so only real user claims exist.
+ */
 export function initializeStorage() {
   try {
+    const PURGE_SEED_KEY = 'fur_demo_data_purged_v3';
+    if (!localStorage.getItem(PURGE_SEED_KEY)) {
+      localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify([]));
+      localStorage.setItem('return_reviews', JSON.stringify({}));
+      localStorage.setItem(STORAGE_KEYS.PICKUPS, JSON.stringify({}));
+      localStorage.setItem('pickup_audit_log', JSON.stringify({}));
+      localStorage.setItem('return_evidence_analysis', JSON.stringify({}));
+      localStorage.setItem('return_triage_assessments', JSON.stringify({}));
+      localStorage.setItem('fur_customer_support_tickets', JSON.stringify([]));
+      localStorage.setItem('fur_customer_notifications', JSON.stringify([]));
+      localStorage.setItem(PURGE_SEED_KEY, 'true');
+    }
+
     if (!localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) {
       localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(INITIAL_CUSTOMERS));
     }
@@ -31,94 +56,52 @@ export function initializeStorage() {
       localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(INITIAL_ORDERS));
     }
     
-    // Seed returns with initial returns + Module 6 demo cases
+    // Clean out all demo returns from storage
     const existingReturnsRaw = localStorage.getItem(STORAGE_KEYS.RETURNS);
-    let allReturnsList = [];
     if (!existingReturnsRaw) {
-      allReturnsList = [...INITIAL_RETURNS, ...DEMO_PICKUP_RETURNS];
-      localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify(allReturnsList));
+      localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify([]));
     } else {
-      allReturnsList = JSON.parse(existingReturnsRaw);
-      const existingIds = new Set(allReturnsList.map(r => r.return_id?.toUpperCase()));
-      let added = false;
-      DEMO_PICKUP_RETURNS.forEach(demo => {
-        if (!existingIds.has(demo.return_id.toUpperCase())) {
-          allReturnsList.push(demo);
-          added = true;
+      try {
+        const parsed = JSON.parse(existingReturnsRaw);
+        if (Array.isArray(parsed)) {
+          const cleaned = parsed.filter(r => !DEMO_RETURN_IDS.has((r.return_id || '').toUpperCase()));
+          localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify(cleaned));
         }
-      });
-      if (added) {
-        localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify(allReturnsList));
+      } catch {
+        localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify([]));
       }
     }
 
-    // Seed initial Module 5 reviews for demo returns if empty
+    // Clean out demo reviews
     const existingReviewsRaw = localStorage.getItem('return_reviews');
-    if (!existingReviewsRaw) {
-      localStorage.setItem('return_reviews', JSON.stringify(DEMO_PICKUP_REVIEWS));
-    } else {
-      const reviewsMap = JSON.parse(existingReviewsRaw);
-      let updated = false;
-      Object.keys(DEMO_PICKUP_REVIEWS).forEach(k => {
-        if (!reviewsMap[k]) {
-          reviewsMap[k] = DEMO_PICKUP_REVIEWS[k];
-          updated = true;
-        }
-      });
-      if (updated) {
+    if (existingReviewsRaw) {
+      try {
+        const reviewsMap = JSON.parse(existingReviewsRaw);
+        DEMO_RETURN_IDS.forEach(id => {
+          delete reviewsMap[id];
+        });
         localStorage.setItem('return_reviews', JSON.stringify(reviewsMap));
+      } catch {
+        localStorage.setItem('return_reviews', JSON.stringify({}));
       }
+    } else {
+      localStorage.setItem('return_reviews', JSON.stringify({}));
     }
 
-    // Seed initial Module 7 Ground Truth Evaluation Labels if empty
-    const existingLabelsRaw = localStorage.getItem(STORAGE_KEYS.EVALUATION_LABELS);
-    if (!existingLabelsRaw) {
-      const initialLabels = {};
-      
-      // Known demo returns
-      initialLabels['RET-2024-003001'] = { label: 'LEGITIMATE', fraud_loss: 0, source: 'Customer Service Review', confirmed_date: '2024-10-14', notes: 'Legitimate customer delayed by holiday rush. Genuine delivery defect.' };
-      initialLabels['RET-2024-003002'] = { label: 'LEGITIMATE', fraud_loss: 0, source: 'Technician Inspection', confirmed_date: '2024-10-15', notes: 'Defective reclining hydraulic mechanism confirmed.' };
-      initialLabels['RET-2024-003003'] = { label: 'LEGITIMATE', fraud_loss: 0, source: 'Transit Waybill Audit', confirmed_date: '2024-10-16', notes: 'Severe freight carrier puncture in velvet upholstery.' };
-      initialLabels['RET-2024-003004'] = { label: 'FRAUD_CONFIRMED', fraud_loss: 14500, source: 'Warehouse Return Audit', confirmed_date: '2024-10-15', notes: 'Customer attempted returning unbranded broken chair instead of ordered ergonomic executive chair.' };
-      initialLabels['RET-2024-003005'] = { label: 'UNKNOWN', fraud_loss: 0, source: 'Pending Documentation', confirmed_date: '', notes: 'Waiting for secondary photo proofs from customer.' };
-      initialLabels['RET-2024-003006'] = { label: 'FRAUD_CONFIRMED', fraud_loss: 42000, source: 'Investigative Review', confirmed_date: '2024-10-14', notes: 'Multiple intentional incisions reported across sectional fabric.' };
-      initialLabels['RET-2024-003007'] = { label: 'LEGITIMATE', fraud_loss: 0, source: 'Phone Confirmation', confirmed_date: '2024-10-15', notes: 'Customer provided alternate address.' };
-      initialLabels['RET-2024-003008'] = { label: 'LEGITIMATE', fraud_loss: 0, source: 'Order Matching', confirmed_date: '2024-10-16', notes: 'Correct invoice attached.' };
-      initialLabels['RET-2024-003009'] = { label: 'LEGITIMATE', fraud_loss: 0, source: 'Delivery Receipt', confirmed_date: '2024-10-16', notes: 'Table finish discoloration verified.' };
-
-      // Also map historical returns from seedData
-      allReturnsList.forEach(ret => {
-        const id = ret.return_id?.toUpperCase();
-        if (id && !initialLabels[id]) {
-          if (ret.outcome === 'Confirmed Fraud') {
-            initialLabels[id] = {
-              label: 'FRAUD_CONFIRMED',
-              fraud_loss: ret.product_price || ret.order?.price || 22000,
-              source: 'Historical Investigation Closed',
-              confirmed_date: ret.decision_date || '2024-06-12',
-              notes: ret.notes || 'Confirmed return fraud pattern.'
-            };
-          } else if (ret.outcome === 'Genuine') {
-            initialLabels[id] = {
-              label: 'LEGITIMATE',
-              fraud_loss: 0,
-              source: 'Historical Review & Resolved',
-              confirmed_date: ret.decision_date || '2024-08-11',
-              notes: ret.notes || 'Genuine return claim.'
-            };
-          } else {
-            initialLabels[id] = {
-              label: 'UNKNOWN',
-              fraud_loss: 0,
-              source: 'Not Yet Verified',
-              confirmed_date: '',
-              notes: 'Pending final ground-truth resolution.'
-            };
-          }
-        }
-      });
-
-      localStorage.setItem(STORAGE_KEYS.EVALUATION_LABELS, JSON.stringify(initialLabels));
+    // Clean out demo pickups
+    const existingPickupsRaw = localStorage.getItem(STORAGE_KEYS.PICKUPS);
+    if (existingPickupsRaw) {
+      try {
+        const pickupsMap = JSON.parse(existingPickupsRaw);
+        DEMO_RETURN_IDS.forEach(id => {
+          delete pickupsMap[id];
+        });
+        localStorage.setItem(STORAGE_KEYS.PICKUPS, JSON.stringify(pickupsMap));
+      } catch {
+        localStorage.setItem(STORAGE_KEYS.PICKUPS, JSON.stringify({}));
+      }
+    } else {
+      localStorage.setItem(STORAGE_KEYS.PICKUPS, JSON.stringify({}));
     }
   } catch (e) {
     console.warn('LocalStorage access error in initializeStorage:', e);
@@ -193,15 +176,11 @@ export function getAllReturns() {
   initializeStorage();
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.RETURNS);
-    if (!raw) return INITIAL_RETURNS;
+    if (!raw) return [];
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed) || parsed.length === 0) {
-      localStorage.setItem(STORAGE_KEYS.RETURNS, JSON.stringify(INITIAL_RETURNS));
-      return INITIAL_RETURNS;
-    }
-    return parsed;
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
-    return INITIAL_RETURNS;
+    return [];
   }
 }
 

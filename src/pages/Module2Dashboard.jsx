@@ -11,6 +11,7 @@ import {
   resetToSeedData 
 } from '../utils/storage';
 import { calculateSystemSummary, formatCurrencyINR } from '../utils/customerHistory';
+import { subscribeRealtime } from '../utils/realtimeBus';
 import { 
   Users, 
   ShoppingBag, 
@@ -44,6 +45,9 @@ export default function Module2Dashboard({ onSelectCustomer, onSelectReturn, onA
 
   useEffect(() => {
     loadData();
+    return subscribeRealtime('*', () => {
+      loadData();
+    });
   }, []);
 
   const loadData = () => {
