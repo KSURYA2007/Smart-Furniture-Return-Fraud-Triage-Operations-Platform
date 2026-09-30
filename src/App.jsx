@@ -17,17 +17,7 @@ import EvaluationCases from './pages/EvaluationCases';
 import ValidationSurvey from './pages/ValidationSurvey';
 import SystemLimitations from './pages/SystemLimitations';
 import EvaluationReport from './pages/EvaluationReport';
-import ApiDocs from './pages/ApiDocs';
-import ApiStatus from './pages/ApiStatus';
-import ApiTestPanel from './pages/ApiTestPanel';
-import TestingDashboard from './pages/TestingDashboard';
-import EndToEndTestView from './pages/EndToEndTestView';
-import EdgeCasesView from './pages/EdgeCasesView';
-import DataQualityView from './pages/DataQualityView';
-import ConsistencyView from './pages/ConsistencyView';
-import PermissionsTestView from './pages/PermissionsTestView';
-import RegressionTestView from './pages/RegressionTestView';
-import TestReportView from './pages/TestReportView';
+
 import ErrorBoundary from './components/common/ErrorBoundary';
 import SecurityDashboard from './pages/SecurityDashboard';
 import AccessControlView from './pages/AccessControlView';
@@ -38,9 +28,8 @@ import SecurityConfigView from './pages/SecurityConfigView';
 import RecoveryView from './pages/RecoveryView';
 import SecurityReportView from './pages/SecurityReportView';
 import PortalLanding from './pages/PortalLanding';
-import AdminLogin from './admin/AdminLogin';
+import UnifiedLogin from './components/UnifiedLogin';
 import CustomerPortalLayout from './customer/CustomerPortalLayout';
-import CustomerLogin from './customer/CustomerLogin';
 import CustomerDashboard from './customer/CustomerDashboard';
 import CustomerReturnsList from './customer/CustomerReturnsList';
 import CustomerNewReturn from './customer/CustomerNewReturn';
@@ -68,11 +57,8 @@ import {
   ShieldAlert,
   Compass,
   BarChart2,
-  Code2,
-  FlaskConical,
   Terminal,
   Table,
-  Activity,
   Lock,
   Home,
   HelpCircle
@@ -80,13 +66,15 @@ import {
 
 export default function App() {
   // Navigation states
-  const [portalMode, setPortalMode] = useState('landing'); // 'landing' | 'customer' | 'admin'
+  // portalMode: 'landing' | 'login' | 'customer' | 'admin'
+  const [portalMode, setPortalMode] = useState('landing');
+  const [loginDefaultPortal, setLoginDefaultPortal] = useState('customer'); // 'customer' | 'admin'
   const [adminLoggedIn, setAdminLoggedIn] = useState(false); // show admin login before dashboard
   const [activeCustomer, setActiveCustomer] = useState(null);
   const [customerView, setCustomerView] = useState('dashboard'); // 'dashboard' | 'returns' | 'new' | 'status' | 'evidence' | 'profile' | 'notifications' | 'support' | 'login'
   const [selectedCustomerReturnId, setSelectedCustomerReturnId] = useState('RET-2024-001021');
 
-  const [activeModule, setActiveModule] = useState('module4'); // 'module4' | 'module5' | 'module6' | 'module2' | 'module3' | 'module7' | 'module8' | 'module9' | 'module10' | 'support'
+  const [activeModule, setActiveModule] = useState('module4'); // 'module4' | 'module5' | 'module6' | 'module2' | 'module3' | 'module7' | 'module10' | 'support'
   const [currentPage, setCurrentPage] = useState('new'); // 'new' | 'success' (for module1)
   const [selectedCustomerId, setSelectedCustomerId] = useState(null); // (for module2 customer profile)
   const [selectedReturnId, setSelectedReturnId] = useState(null); // (for module3 evidence analysis)
@@ -95,8 +83,6 @@ export default function App() {
   const [selectedPickupCaseId, setSelectedPickupCaseId] = useState(null); // (for module6 pickup operations)
   const [pickupSubView, setPickupSubView] = useState('dashboard'); // 'dashboard' | 'detail' | 'batches'
   const [metricsSubView, setMetricsSubView] = useState('dashboard'); // 'dashboard' | 'experiment' | 'cases' | 'validation' | 'limitations' | 'report'
-  const [apiSubView, setApiSubView] = useState('docs'); // 'docs' | 'status' | 'test'
-  const [testSubView, setTestSubView] = useState('dashboard'); // 'dashboard' | 'end-to-end' | 'edge-cases' | 'data-quality' | 'consistency' | 'permissions' | 'regression' | 'report'
   const [securitySubView, setSecuritySubView] = useState('dashboard'); // 'dashboard' | 'access' | 'privacy' | 'audit' | 'reliability' | 'config' | 'recovery' | 'report'
   const [currentReturnContext, setCurrentReturnContext] = useState(null);
   
@@ -128,6 +114,18 @@ export default function App() {
       window.removeEventListener('resize', updateNavbarHeight);
     };
   }, []);
+
+  // Auth guard redirects — runs after render, avoids render-phase setState
+  useEffect(() => {
+    if (portalMode === 'customer' && (!activeCustomer || customerView === 'login')) {
+      setPortalMode('login');
+      setLoginDefaultPortal('customer');
+    }
+    if (portalMode === 'admin' && !adminLoggedIn) {
+      setPortalMode('login');
+      setLoginDefaultPortal('admin');
+    }
+  }, [portalMode, activeCustomer, customerView, adminLoggedIn]);
 
   // Dynamic time-based greeting matching user screenshot
   const getGreeting = () => {
@@ -235,36 +233,45 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 1. Landing Page Portal Selector
+  // 1. Landing Page — now contains the unified sign-in form inline
   if (portalMode === 'landing') {
     return (
       <PortalLanding
-        onEnterCustomerPortal={() => {
+        onEnterCustomerPortal={(cust) => {
+          setActiveCustomer(cust);
+          setCustomerView('dashboard');
           setPortalMode('customer');
-          setActiveCustomer(null);
-          setCustomerView('login');
         }}
         onEnterAdminPortal={() => {
+          setAdminLoggedIn(true);
           setPortalMode('admin');
-          setAdminLoggedIn(false);
         }}
       />
     );
   }
 
-  // 2. Customer Portal Experience (Isolated from Internal Risk / Fraud Logic)
+  // 2. Unified /login fallback — kept for deep-link support via logout/switch flows
+  if (portalMode === 'login') {
+    return (
+      <UnifiedLogin
+        defaultPortal={loginDefaultPortal}
+        onLoginAdmin={() => {
+          setAdminLoggedIn(true);
+          setPortalMode('admin');
+        }}
+        onLoginCustomer={(cust) => {
+          setActiveCustomer(cust);
+          setCustomerView('dashboard');
+          setPortalMode('customer');
+        }}
+      />
+    );
+  }
+
+  // 3. Customer Portal Experience (Isolated from Internal Risk / Fraud Logic)
   if (portalMode === 'customer') {
-    if (!activeCustomer || customerView === 'login') {
-      return (
-        <CustomerLogin
-          onLogin={(cust) => {
-            setActiveCustomer(cust);
-            setCustomerView('dashboard');
-          }}
-          onSwitchToAdmin={() => setPortalMode('admin')}
-        />
-      );
-    }
+    // Fallback handled by top-level useEffect guard above
+    if (!activeCustomer || customerView === 'login') return null;
 
     const unreadCount = getCustomerNotifications(activeCustomer.id).filter(n => !n.read).length;
 
@@ -276,8 +283,13 @@ export default function App() {
         onLogout={() => {
           setActiveCustomer(null);
           setCustomerView('login');
+          setLoginDefaultPortal('customer');
+          setPortalMode('login');
         }}
-        onSwitchToAdmin={() => setPortalMode('admin')}
+        onSwitchToAdmin={() => {
+          setLoginDefaultPortal('admin');
+          setPortalMode('login');
+        }}
         unreadCount={unreadCount}
       >
         {customerView === 'dashboard' && (
@@ -347,21 +359,10 @@ export default function App() {
     );
   }
 
-  // 3. Admin & Operations Portal (Consolidating Modules 1 through 10)
-  // Show admin login gate first
-  if (!adminLoggedIn) {
-    return (
-      <AdminLogin
-        onLogin={() => setAdminLoggedIn(true)}
-        onSwitchToCustomer={() => {
-          setPortalMode('customer');
-          setActiveCustomer(null);
-          setCustomerView('login');
-        }}
-        onBackToLanding={() => setPortalMode('landing')}
-      />
-    );
-  }
+  // 4. Admin & Operations Portal (Consolidating Modules 1 through 10)
+  // If not logged in, the top-level useEffect guard will redirect to login
+  if (portalMode === 'admin' && !adminLoggedIn) return null;
+
 
   return (
     <div className="app-layout">
@@ -394,8 +395,13 @@ export default function App() {
                 type="button"
                 className="admin-btn-cust-portal"
                 onClick={() => {
-                  setPortalMode('customer');
-                  setCustomerView('dashboard');
+                  if (activeCustomer) {
+                    setPortalMode('customer');
+                    setCustomerView('dashboard');
+                  } else {
+                    setLoginDefaultPortal('customer');
+                    setPortalMode('login');
+                  }
                 }}
                 title="Switch to Customer Care Portal"
               >
@@ -405,7 +411,7 @@ export default function App() {
 
               <div className="admin-status-pill" title="System operational status">
                 <span className="admin-status-dot" />
-                <span>M1–M10 Online</span>
+                <span>M2–M7 · M10 Online</span>
               </div>
 
               <div className="admin-user-card" title="Active Admin Session">
@@ -422,6 +428,8 @@ export default function App() {
                 onClick={() => {
                   setAdminLoggedIn(false);
                   setPortalMode('landing');
+                  setActiveCustomer(null);
+                  setCustomerView('login');
                 }}
                 title="Sign out of Operations Portal"
               >
@@ -443,8 +451,6 @@ export default function App() {
                 { id: 'module2', num: 'M2', label: 'Customer History', icon: History, onSelect: () => setSelectedCustomerId(null) },
                 { id: 'module3', num: 'M3', label: 'Evidence Analysis', icon: Camera },
                 { id: 'module7', num: 'M7', label: 'Metrics & Eval', icon: BarChart2, onSelect: () => setMetricsSubView('dashboard') },
-                { id: 'module8', num: 'M8', label: 'REST API Docs', icon: Code2, onSelect: () => setApiSubView('docs') },
-                { id: 'module9', num: 'M9', label: 'Testing Suite', icon: Activity, onSelect: () => setTestSubView('dashboard') },
                 { id: 'module10', num: 'M10', label: 'Security & Audit', icon: ShieldCheck, onSelect: () => setSecuritySubView('dashboard') },
                 { id: 'support', num: 'Care', label: 'Support Queue', icon: HelpCircle }
               ].map(m => {
@@ -653,102 +659,6 @@ export default function App() {
               onNavigateLimitations={() => setMetricsSubView('limitations')}
               onNavigateReport={() => setMetricsSubView('report')}
               onSelectCase={(returnId) => handleOpenPickupCase(returnId)}
-            />
-          )
-        )}
-
-        {/* Module 8: API, Backend Stub & System Integration Layer */}
-        {activeModule === 'module8' && (
-          apiSubView === 'status' ? (
-            <ApiStatus
-              onNavigateDocs={() => setApiSubView('docs')}
-              onNavigateTest={() => setApiSubView('test')}
-            />
-          ) : apiSubView === 'test' ? (
-            <ApiTestPanel
-              onNavigateDocs={() => setApiSubView('docs')}
-              onNavigateStatus={() => setApiSubView('status')}
-            />
-          ) : (
-            <ApiDocs
-              onNavigateStatus={() => setApiSubView('status')}
-              onNavigateTest={() => setApiSubView('test')}
-            />
-          )
-        )}
-
-        {/* Module 9: Final Testing, Edge Cases & End-to-End Validation */}
-        {activeModule === 'module9' && (
-          testSubView === 'end-to-end' ? (
-            <EndToEndTestView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigateReport={() => setTestSubView('report')}
-            />
-          ) : testSubView === 'edge-cases' ? (
-            <EdgeCasesView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigateReport={() => setTestSubView('report')}
-            />
-          ) : testSubView === 'data-quality' ? (
-            <DataQualityView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigateReport={() => setTestSubView('report')}
-            />
-          ) : testSubView === 'consistency' ? (
-            <ConsistencyView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateReport={() => setTestSubView('report')}
-            />
-          ) : testSubView === 'permissions' ? (
-            <PermissionsTestView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigateReport={() => setTestSubView('report')}
-            />
-          ) : testSubView === 'regression' ? (
-            <RegressionTestView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigatePermissions={() => setTestSubView('permissions')}
-              onNavigateReport={() => setTestSubView('report')}
-            />
-          ) : testSubView === 'report' ? (
-            <TestReportView
-              onNavigateDashboard={() => setTestSubView('dashboard')}
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigatePermissions={() => setTestSubView('permissions')}
-              onNavigateRegression={() => setTestSubView('regression')}
-            />
-          ) : (
-            <TestingDashboard
-              onNavigateEndToEnd={() => setTestSubView('end-to-end')}
-              onNavigateEdgeCases={() => setTestSubView('edge-cases')}
-              onNavigateDataQuality={() => setTestSubView('data-quality')}
-              onNavigateConsistency={() => setTestSubView('consistency')}
-              onNavigatePermissions={() => setTestSubView('permissions')}
-              onNavigateRegression={() => setTestSubView('regression')}
-              onNavigateReport={() => setTestSubView('report')}
             />
           )
         )}
